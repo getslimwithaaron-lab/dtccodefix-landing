@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DTCCodeFix — Concept 1: Dark Garage</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --dark: #141414;
+    --carbon: #1a1a1a;
+    --steel: #2a2a2a;
+    --chrome: #c8c8c8;
+    --light: #e8e8e8;
+    --amber: #f59e0b;
+    --amber-bright: #fbbf24;
+    --amber-dim: #b45309;
+    --red-accent: #dc2626;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--chrome);
+    font-family: 'Source Sans 3', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Subtle scan line overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.25rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(245,158,11,0.15);
+  }
+
+  .logo {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+
+  .logo span { color: var(--amber); }
+
+  .nav-tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--amber-dim);
+    border: 1px solid var(--amber-dim);
+    padding: 0.3rem 0.8rem;
+    font-weight: 500;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 2rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards 0.4s;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--amber);
+    position: relative;
+  }
+
+  .hero-sub {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: var(--chrome);
+    max-width: 600px;
+    font-weight: 300;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards 0.6s;
+  }
+
+  /* Diagnostic readout style decoration */
+  .diag-line {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: right;
+    font-family: 'Courier New', monospace;
+    font-size: 0.7rem;
+    color: rgba(245,158,11,0.2);
+    line-height: 2.2;
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .diag-line { display: block; }
+  }
+
+  /* Features */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: rgba(245,158,11,0.1);
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards 0.8s;
+  }
+
+  .feature {
+    background: var(--dark);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: background 0.3s ease;
+  }
+
+  .feature:hover {
+    background: var(--carbon);
+  }
+
+  .feature-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--amber-dim);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .feature h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 0.75rem;
+    letter-spacing: 1px;
+  }
+
+  .feature p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(200,200,200,0.7);
+    font-weight: 300;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+    text-align: center;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards 1s;
+  }
+
+  .cta-section h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--light);
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-section p {
+    color: var(--chrome);
+    font-weight: 300;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+  }
+
+  .email-form {
+    display: flex;
+    gap: 0;
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .email-form input {
+    flex: 1;
+    padding: 1rem 1.25rem;
+    background: var(--steel);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-right: none;
+    color: var(--light);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .email-form input::placeholder {
+    color: rgba(200,200,200,0.35);
+  }
+
+  .email-form input:focus {
+    border-color: var(--amber);
+  }
+
+  .email-form button {
+    padding: 1rem 2rem;
+    background: var(--amber);
+    color: var(--black);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;
+  }
+
+  .email-form button:hover {
+    background: var(--amber-bright);
+  }
+
+  .cta-note {
+    font-size: 0.8rem;
+    color: rgba(200,200,200,0.35);
+    letter-spacing: 1px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid rgba(245,158,11,0.08);
+    font-size: 0.75rem;
+    color: rgba(200,200,200,0.25);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 7rem 1.25rem 3rem; }
+    .email-form { flex-direction: column; }
+    .email-form input { border-right: 1px solid rgba(245,158,11,0.2); border-bottom: none; }
+    .email-form button { padding: 1rem; }
+    .features { margin: 0 1.25rem 3rem; }
+    .cta-section { padding: 3rem 1.25rem 5rem; }
+  }
+
+/* EmailOctopus form styling */
+.eo-form-wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.eo-form-wrapper form {
+  display: flex !important;
+  gap: 0.5rem !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+}
+.eo-form-wrapper input[type="email"] {
+  flex: 1 !important;
+  min-width: 200px !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 8px !important;
+  border: 2px solid rgba(255,255,255,0.2) !important;
+  font-size: 1rem !important;
+}
+.eo-form-wrapper button[type="submit"] {
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">DTC<span>CodeFix</span></div>
+  <div class="nav-tag">Coming Soon</div>
+</nav>
+
+<section class="hero">
+  <div class="diag-line">
+    SYS_INIT . . . OK<br>
+    DTC_DB v2.0<br>
+    LOADING MODULES<br>
+    ──────────<br>
+    OBD-II . . . . READY<br>
+    CAN_BUS . . . READY<br>
+    DIAG . . . . . READY<br>
+    ──────────<br>
+    STATUS: ONLINE<br>
+    ENTRIES: 14,200+<br>
+    VERIFIED: TRUE
+  </div>
+  <div class="hero-label">For Professional Technicians</div>
+  <h1>The DTC Database<br>Built by <em>Mechanics</em>,<br>for Mechanics.</h1>
+  <p class="hero-sub">Stop wasting bay time on generic code definitions. Get real-world diagnostic data — verified fixes, vehicle-specific patterns, and the shortcuts that actually get cars out the door.</p>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <div class="feature-num">01 — Verified Fixes</div>
+    <h3>Real Fixes, Not Textbook Theory</h3>
+    <p>Every code entry includes verified repair procedures from working techs — what actually solved it, on what vehicle, with what parts.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-num">02 — Vehicle Specific</div>
+    <h3>Same Code, Different Fix</h3>
+    <p>Same code, different car, different fix. Broken down by make, model, and year so you're not guessing.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-num">03 — Misdiagnosis Alerts</div>
+    <h3>Know What Not to Replace</h3>
+    <p>Common misdiagnoses flagged on every entry. Stop wasting your customer's money and your time on parts that aren't the problem.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-num">04 — Growing Daily</div>
+    <h3>Built by a Network of Techs</h3>
+    <p>New codes and fix data added continuously by verified mechanics. This database gets smarter every day.</p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Get Early Access</h2>
+  <p>Pro mechanics who sign up now lock in founding member pricing. $25/month at launch.</p>
+  <div class="eo-form-wrapper"><script async src="https://eocampaign1.com/form/8382aa52-120c-11f1-845c-6b07ecb58af2.js" data-form="8382aa52-120c-11f1-845c-6b07ecb58af2"></script></div>
+  <div class="cta-note">No spam. Just launch updates.</div>
+</section>
+
+<footer>
+  &copy; 2025 DTCCodeFix — Built by a diagnostic specialist, not a software company.
+</footer>
+
+</body>
+</html>
