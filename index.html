@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-widthh, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DTCCodeFix — Concept 1: Dark Garage</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;h600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --black: #0a0a0a;
@@ -121,12 +121,12 @@
   }
 
   .hero-sub {
-    font-size: 1.2rem;
+    font-size: 1.35rem;
     line-height: 1.7;
     color: var(--chrome);
-    max-width: 600px;
+    max-width: 620px;
     font-weight: 300;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     opacity: 0;
     animation: slideUp 0.6s ease forwards 0.6s;
   }
@@ -162,7 +162,7 @@
 
   .feature {
     background: var(--dark);
-    padding: 2.5rem 2rem;
+    padding: 3rem 2.25rem;
     position: relative;
     transition: background 0.3s ease;
   }
@@ -173,7 +173,7 @@
 
   .feature-num {
     font-family: 'Oswald', sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     letter-spacing: 3px;
     color: var(--amber-dim);
     margin-bottom: 1rem;
@@ -182,7 +182,7 @@
 
   .feature h3 {
     font-family: 'Oswald', sans-serif;
-    font-size: 1.15rem;
+    font-size: 1.3rem;
     font-weight: 600;
     text-transform: uppercase;
     color: var(--light);
@@ -191,8 +191,8 @@
   }
 
   .feature p {
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.7;
     color: rgba(200,200,200,0.7);
     font-weight: 300;
   }
@@ -209,7 +209,7 @@
 
   .cta-section h2 {
     font-family: 'Oswald', sans-serif;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -221,7 +221,7 @@
     color: var(--chrome);
     font-weight: 300;
     margin-bottom: 2rem;
-    font-size: 1rem;
+    font-size: 1.15rem;
   }
 
   .email-form {
@@ -302,31 +302,103 @@
     .cta-section { padding: 3rem 1.25rem 5rem; }
   }
 
-/* EmailOctopus form styling */
-.eo-form-wrapper {
-  max-width: 500px;
+/* Hero CTA button */
+.hero-cta-btn {
+  padding: 1.1rem 2.5rem;
+  background: var(--amber);
+  color: var(--black);
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: slideUp 0.6s ease forwards 0.8s;
+  box-shadow: 0 4px 20px rgba(245,158,11,0.35);
+}
+.hero-cta-btn:hover {
+  background: var(--amber-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(245,158,11,0.5);
+}
+.hero-note {
+  font-size: 1rem;
+  color: rgba(200,200,200,0.4);
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  margin-top: 1rem;
+  opacity: 0;
+  animation: slideUp 0.6s ease forwards 1s;
+}
+
+/* EmailOctopus form centering & styling */
+.cta-section .inline-container {
   margin: 0 auto;
+  max-width: 600px;
 }
-.eo-form-wrapper form {
-  display: flex !important;
-  gap: 0.5rem !important;
-  flex-wrap: wrap !important;
-  justify-content: center !important;
+.cta-section .form-container {
+  margin: 0 auto !important;
 }
-.eo-form-wrapper input[type="email"] {
-  flex: 1 !important;
-  min-width: 200px !important;
-  padding: 0.75rem 1rem !important;
-  border-radius: 8px !important;
-  border: 2px solid rgba(255,255,255,0.2) !important;
+.emailoctopus-form-wrapper {
+  max-width: 500px;
+  margin: 1rem auto 0 !important;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.emailoctopus-form { text-align: center; }
+.emailoctopus-form .main-form { text-align: center; }
+.emailoctopus-form-row { margin-bottom: 0.75rem; text-align: center; }
+.emailoctopus-form-row label {
+  color: var(--light) !important;
+  font-family: 'Source Sans 3', sans-serif !important;
+}
+.emailoctopus-form .form-control {
+  width: 100% !important;
+  background: var(--steel) !important;
+  color: var(--light) !important;
+  border: 1px solid rgba(245,158,11,0.2) !important;
+  border-radius: 0 !important;
+  font-family: 'Source Sans 3', sans-serif !important;
+  font-size: 1.1rem !important;
+  padding: 1rem 1.25rem !important;
+}
+.emailoctopus-form .form-control:focus {
+  border-color: var(--amber) !important;
+  outline: none !important;
+}
+.emailoctopus-form .form-control::placeholder {
+  color: rgba(200,200,200,0.35) !important;
+}
+.emailoctopus-form .btn.btn-primary {
+  width: 100% !important;
+  background: var(--amber) !important;
+  color: var(--black) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 600 !important;
   font-size: 1rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  padding: 1rem 1.5rem !important;
+  cursor: pointer;
 }
-.eo-form-wrapper button[type="submit"] {
-  padding: 0.75rem 1.5rem !important;
-  border-radius: 8px !important;
-  font-weight: 700 !important;
-  font-size: 1rem !important;
-  cursor: pointer !important;
+.emailoctopus-form .btn.btn-primary:hover {
+  background: var(--amber-bright) !important;
+}
+.emailoctopus-success-message {
+  color: var(--light) !important;
+  font-family: 'Source Sans 3', sans-serif !important;
+}
+.emailoctopus-error-message {
+  color: var(--red-accent) !important;
+  font-family: 'Source Sans 3', sans-serif !important;
 }
 </style>
 </head>
@@ -354,6 +426,8 @@
   <div class="hero-label">For Professional Technicians</div>
   <h1>The DTC Database<br>Built by <em>Mechanics</em>,<br>for Mechanics.</h1>
   <p class="hero-sub">Stop wasting bay time on generic code definitions. Get real-world diagnostic data — verified fixes, vehicle-specific patterns, and the shortcuts that actually get cars out the door.</p>
+  <button type="button" class="hero-cta-btn" onclick="document.querySelector('.cta-section').scrollIntoView({behavior:'smooth'})">Sign Up for Early Access</button>
+  <p class="hero-note">Founding member pricing locked in at launch. No spam. Just updates.</p>
 </section>
 
 <section class="features">
@@ -382,12 +456,12 @@
 <section class="cta-section">
   <h2>Get Early Access</h2>
   <p>Pro mechanics who sign up now lock in founding member pricing. $25/month at launch.</p>
-  <div class="eo-form-wrapper"><script async src="https://eocampaign1.com/form/be23c8d8-120e-11f1-a326-2779e5689657.js" data-form="be23c8d8-120e-11f1-a326-2779e5689657"></script></div>
+  <script async src="https://eocampaign1.com/form/be23c8d8-120e-11f1-a326-2779e5689657.js" data-form="be23c8d8-120e-11f1-a326-2779e5689657"></script>
   <div class="cta-note">No spam. Just launch updates.</div>
 </section>
 
 <footer>
-  &copy; 2025 DTCCodeFix — Built by a diagnostic specialist, not a software company.
+  &copy; 2026 DTCCodeFix — Built by a diagnostic specialist, not a software company.
 </footer>
 
 </body>
